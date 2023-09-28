@@ -1,51 +1,92 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect, useContext } from 'react';
+import styled, {keyframes} from 'styled-components';
+import ChartComponentDay from './ChartComponentDay';
+import { ColorPalettes } from '../interfaces/types';
 
 // styled-components 스타일 선언
+type CalendarContainerProps = {
+    clicked: boolean;
+};
 
-const CalendarContainer = styled.div`
+
+const MainContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 15px;
+    padding:20px;
+    background-color:${ColorPalettes.mainContainerColor};
+`;
+
+
+const ChartContainer = styled.div`
+
+    flex: 1;    
+    width: 100%;
+    padding: 0%;  // 30%에서 10%로 변경
+      // 상하 간격은 0, 좌우 간격은 10px
+      
+`;
+
+
+const CalendarContainer = styled.div<CalendarContainerProps>`
+    flex: 1; // flex container의 사용 가능한 공간을 최대한 활용하도록 변경
     width: 450px;
-    height: 450px;
-    margin: 0 auto;
+    height: 500px;
+    background-color: ${ColorPalettes.calenderContainerColor};
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #ccc;
-    padding: 20px;
+    border-radius: 10px;
+    padding: 30px;
     text-align: center;
+    align-self: flex-start;
+    color:${ColorPalettes.calenderTextColor}
 `;
+
 
 const Header = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 1rem; // rem 단위로 변경
 `;
 
+
 const YearMonth = styled.div`
-    font-size: 30px;
+    flex: 1;
+    display: flex; // flexbox 사용
+    justify-content: center; // 수평 중앙 정렬
+    align-items: center; // 수직 중앙 정렬
+    gap: 90px;
+    text-align: center;
+    font-size: 1.5rem; // rem 단위로 변경
 `;
 
 const NavigationButton = styled.button`
-    background-color: #58D3F7;
+    background-color: ${ColorPalettes.calenderPointColor};
     font-size: 20px;
     color: #fff;
     border: none;
     padding: 20px 25px;
     border-radius: 10px;
     cursor: pointer;
+    
 `;
 
 const DaysContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    background-color: #f0f0f0;
+    background-color: ${ColorPalettes.calenderPointColor};
+    border-radius: 7px;
     font-weight: bold;
-    padding: 5px;
+    padding: 0px;
     width: 100%;
     align-items: center;
+    justify-items: flex-start;
 `;
 
 const Day = styled.div`
@@ -56,14 +97,13 @@ const Day = styled.div`
 const DatesContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 10px;
     width: 100%;
     justify-items: center;
     align-items: center;
 `;
 
 const DateItem = styled.div`
-    background-color: #fff;
     padding: 20px;
     text-align: center;
     cursor: pointer;
@@ -73,18 +113,23 @@ const DateItem = styled.div`
     justify-content: center;
 
     &.today {
-        background-color: #58D3F7;
+        background-color: ${ColorPalettes.calenderPointColor};
         color: #fff;
         border-radius: 50%;
-        width: 24px;
-        height: 24px;
+        width: 14px;
+        height: 14px;
     }
 `;
+
+
+  
 
 const Calendar: React.FC = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dates, setDates] = useState<Array<number>>([]);
-
+    const [clickedDate, setclickedDate] = useState<string|null>(null);
+   
+    
     useEffect(() => {
         renderCalendar();
     }, [currentDate]);
@@ -100,12 +145,16 @@ const Calendar: React.FC = () => {
         for (let i = 1; i <= lastDay; i++) {
             daysArray.push(i);
         }
-
+        setclickedDate(`${currentDate.getFullYear}-${currentDate.getMonth}-${currentDate.getDay}`)
         setDates(daysArray);
     };
 
     const dateClicked = (day: number) => {
-        alert(`선택한 날짜: ${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월 ${day}일`);
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const formattedDay = day.toString().padStart(2, '0');
+        setclickedDate(null);
+        setclickedDate(`${year}-${month}-${formattedDay}`);
     };
 
     const prevMonth = () => {
@@ -121,14 +170,16 @@ const Calendar: React.FC = () => {
     };
 
     return (
-        <CalendarContainer>
+        <>
+        <MainContainer>
+
+        <CalendarContainer clicked={!!clickedDate}>
             <Header>
-                <YearMonth>{currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월</YearMonth>
-                <div>
-                    <NavigationButton onClick={prevMonth}>&lt;</NavigationButton>
-                    <NavigationButton onClick={goToday}>Today</NavigationButton>
-                    <NavigationButton onClick={nextMonth}>&gt;</NavigationButton>
-                </div>
+                <YearMonth>
+                <NavigationButton onClick={prevMonth}>&lt;</NavigationButton>
+                    <div style={{ width: `150px` }}>{currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월</div>
+                <NavigationButton onClick={nextMonth}>&gt;</NavigationButton>
+                </YearMonth>
             </Header>
             <div>
                 <DaysContainer>
@@ -159,7 +210,12 @@ const Calendar: React.FC = () => {
                 </DatesContainer>
             </div>
         </CalendarContainer>
+
+        {clickedDate && <ChartComponentDay CalenderClickedDate={clickedDate}/>}
+        
+        </MainContainer>
+    </>
+
     );
 };
-
 export default Calendar;
