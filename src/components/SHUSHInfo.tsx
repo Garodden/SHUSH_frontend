@@ -1,8 +1,8 @@
 import React from 'react';
 import styled, { createGlobalStyle }from 'styled-components';
 import { ColorPalettes } from '../interfaces/types';
-
-
+import DBEffects from './DBEffects';
+import PositionImg from '../images/DbCountPosition.png';
 const GlobalFonts = createGlobalStyle`
   @font-face {
       font-family: 'HakgyoansimWoojuR';
@@ -11,8 +11,13 @@ const GlobalFonts = createGlobalStyle`
       font-style: normal;
   }
 `;
-
+const GridContainer = styled.div`
+display: grid;
+grid-template-columns: repeat(2,minmax(auto, auto));
+grid-column-gap: 20px;
+`
 const ContainerWhole = styled.div`
+
   width:1230px;
   display: flex;
   justify-content: center;
@@ -21,6 +26,7 @@ const ContainerWhole = styled.div`
   border-radius: 15px;
   gap:20px;
   padding:20px;
+  word-break: keep-all;
   background-color: ${ColorPalettes.mainContainerColor}
 `;
 
@@ -43,8 +49,23 @@ const ContainerHorizontal = styled.div`
   gap: 20px; // 각 텍스트 박스 사이의 간격
 `;
 
-const TextBox = styled.div`
+const TextBoxWhat = styled.div`
   width:1000px; 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  background-color:${ColorPalettes.textBoxColor};
+  box-sizing: border-box;
+  font-family: 'HakgyoansimWoojuR', sans-serif;
+  font-size: 23px;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  align-self: flex-start;
+  color:${ColorPalettes.textColor};
+  
+`;
+const TextBoxService = styled.div`
+  width:500px; 
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
@@ -81,7 +102,7 @@ const SHUSHInfo = () => {
     <>
     <ContainerWhole>
     <ContainerVertical>
-      <TextBox>
+      <TextBoxWhat>
         <h2>SHUSH란 무엇인가</h2>
         <div style={{ whiteSpace: "pre-wrap" }}>
         {`오랜 시간 동안, 학교 주변 상권과 주거지를 중심으로 소음을 유발하는 상황들이 수시로 빈번하게 발생하면서 소음 공해에 대한 문제 해결 방안이 지속적으로 요구되어 왔습니다.
@@ -92,8 +113,9 @@ SHUSH는 여러분이 소음 공해에 노출되는 것을 예방하고 피해�
 소음 피해 의식은 지극히 주관적인 것이기 때문에 몇몇 소음에 둔감한 분들은 해당 문제가 공해의 성격을 띠지 않는다고 할 수도 있습니다. 이처럼 소음 공해 피해 여부는 개인과 개인이 첨예하게 대립할 수 있는 사항이므로 소음 기준을 더욱 명확하게 하고, 이를 가시화하여 소음으로 인한 피해 상황을 방지하는 것이 필요하다고 생각했습니다. 따라서 소음측정기로 수집한 객관적인 지표를 활용하여 소음 발생 문제를 책임자들이 인식할 수 있도록 하는 것이 프로젝트의 목표입니다.  
 `}</div>
 
-      </TextBox>
-      <TextBox>
+      </TextBoxWhat>
+      <GridContainer>
+      <TextBoxService>
         <h2>SHUSH가 제공하는 서비스</h2>
         <div style={{ whiteSpace: "pre-wrap" }}>
           {`SHUSH는 소음이 자주 발생하는 학교 주변 지역에 소음측정기를 설치해 실시간/일간 /주간 소음데이터를 수집하여 그래프로 나타냅니다.
@@ -108,7 +130,9 @@ SHUSH는 여러분이 소음 공해에 노출되는 것을 예방하고 피해�
 
 본 소음 기준은 국가소음정보시스템의 소음진동기준을 참고하였습니다.`}
         </div>
-      </TextBox>
+      </TextBoxService>
+      <DBEffects/>
+      </GridContainer>
     </ContainerVertical>
     <ContainerHorizontal>
       <TextBoxHrizontal>
@@ -122,6 +146,9 @@ SHUSH는 여러분이 소음 공해에 노출되는 것을 예방하고 피해�
         <h2>SHUSH 사용 방법</h2>
         <h3>주기적으로 홈페이지를 참고하여 소음데이터의 변화를 확인해주세요</h3>
       </TextBoxHrizontal>
+    </ContainerHorizontal>
+    <ContainerHorizontal>
+    <img src={PositionImg} alt="Description" style={{ borderRadius: '20px' }} />
     </ContainerHorizontal>
     </ContainerWhole>
     </>

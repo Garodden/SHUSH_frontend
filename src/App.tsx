@@ -6,9 +6,11 @@ import styled from 'styled-components';
 import axios from "axios";
 import ChartComponentDay from "./components/ChartComponentDay";
 import Calendar from "./components/Calender";
+import DBEffects from "./components/DBEffects";
 import backgroundImage from './images/gradation_background2.jpg';
 import SHUSHInfo from "./components/SHUSHInfo";
 import { ColorPalettes } from "./interfaces/types";
+
 
 const BackgroundStyle = styled.div`
   width: 100vw;
@@ -72,12 +74,14 @@ function App() {
         <h2 style = {{color : `white`}}>know your local noise pollutioning</h2>
           <Calendar />
           <SHUSHInfo/>
+          
           <div style={{ width: '50%', padding: '25%', zIndex: 1, transform: 'translateY(-20%)'}}>
             
           <div style={{ width: '110%'}}>
           
           </div>
           </div>
+
       </BackgroundStyle>
       </BackgroundBox>
       
