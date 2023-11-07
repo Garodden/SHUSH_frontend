@@ -92,7 +92,7 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
 
     useEffect(() => {
       if(prop.CalenderClickedDate){
-    fetchData(`http://localhost:4000/getAverageData/weekly/${prop.CalenderClickedDate}/B`).then((data:WeeklyData[]) => {
+    fetchData(`http://3.35.225.160:4000/getAverageData/weekly/${prop.CalenderClickedDate}/B`).then((data:WeeklyData[]) => {
         const legend = data.map(item => `${item.id.startYear}-${item.id.startMonth}-${item.id.startDay} ~ ${item.id.endYear}-${item.id.endMonth}-${item.id.endDay}`);
         const avgData = data.map(item => item.average);
         setWeeklyData({
@@ -123,7 +123,7 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
         })
       });
 
-      fetchData(`http://localhost:4000/getAverageData/daily/${prop.CalenderClickedDate}/B`).then((data:DailyData[]) => {
+      fetchData(`http://3.35.225.160:4000/getAverageData/daily/${prop.CalenderClickedDate}/B`).then((data:DailyData[]) => {
         const timeData = data.map(item => `${item.id.year}-${item.id.month}-${item.id.day}`);
         const avgData = data.map(item => item.average);
         setDailyData({
@@ -155,7 +155,7 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
 
   useEffect(() => {
     if(selectedDate){
-    fetchData(`http://localhost:4000/getAverageData/hourly/${selectedDate}/B`).then((data:HourlyData[]) => {
+    fetchData(`http://3.35.225.160:4000/getAverageData/hourly/${selectedDate}/B`).then((data:HourlyData[]) => {
       const timeData = data.map(item => item.id.hour);
       const avgData = data.map(item => item.average);
 
