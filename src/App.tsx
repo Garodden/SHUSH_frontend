@@ -64,16 +64,53 @@ const BackgroundBox = styled.div`
     z-index: -4;  // 다른 요소들 뒤에 위치하도록
     display: flex;
 `;
+
+const TitleBox = styled.div`
+    width:1230px;
+    
+    text-align: left;
+    color: white;
+`;
+
+const StyledH1 = styled.h1`
+  font-size: 5em;
+  display: inline;
+  margin-bottom: 0em !important;
+  
+`;
+
+const StyledH3 = styled.h3`
+  font-size: 1.5em;
+  display: inline;
+  font-weight: normal;
+  margin-top: 0!important;
+  // 상단 간격 제거
+  margin-bottom: 0em!important;
+  
+`;
+
+const StyledH2 = styled.h2`
+  font-size: 2em;
+  font-weight: normal;
+  margin-top: 0; 
+  line-height: 0.8; /* 또는 'px' 단위로 값을 지정 */
+`;
+
 function App() {
 
   return (
     <>
+    
     <BackgroundBox>
+      
       <BackgroundStyle>
-        <h1 style = {{color : `white`}}>team SHUSH</h1>
-        <h2 style = {{color : `white`}}>know your local noise pollutioning</h2>
-          <Calendar />
-          <SHUSHInfo/>
+        <TitleBox>
+          <StyledH1>SHUSH</StyledH1>
+          <StyledH3> SOCIAL PROBLEM-SOLVING PROJECT</StyledH3>
+          <StyledH2>know your local noise polluting</StyledH2>
+        </TitleBox>  
+        <Calendar />
+        <SHUSHInfo/>
           
           <div style={{ width: '50%', padding: '25%', zIndex: 1, transform: 'translateY(-20%)'}}>
             

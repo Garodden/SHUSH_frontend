@@ -141,14 +141,16 @@ SHUSH는 여러분이 소음 공해에 노출되는 것을 예방하고 피해�
           {`소음측정기는 소음이 주로 많이 발생하는 지역인 한마음 마트 앞/ 욱일 뒤/ 농심국제관 뒤에 설치되어 주기적으로 소음 데이터를 수집할 예정이고 실시간 소음전광판은 
 한마음 마트 앞에만 상시 설치합니다. `}
           </div>
+          <img src={PositionImg} alt="Description" style={{ borderRadius: '20px', width:'100%', height:'100%' }} />
       </TextBoxHrizontal>
       <TextBoxHrizontal>
         <h2>SHUSH 사용 방법</h2>
         <h3>주기적으로 홈페이지를 참고하여 소음데이터의 변화를 확인해주세요</h3>
+        
       </TextBoxHrizontal>
     </ContainerHorizontal>
     <ContainerHorizontal>
-    <img src={PositionImg} alt="Description" style={{ borderRadius: '20px' }} />
+    
     </ContainerHorizontal>
     </ContainerWhole>
     </>
