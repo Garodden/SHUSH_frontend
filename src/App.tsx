@@ -8,7 +8,7 @@ import ChartComponentDay from "./components/ChartComponentDay";
 import Calendar from "./components/Calender";
 import DBEffects from "./components/DBEffects";
 import backgroundImage from './images/gradation_background2.jpg';
-import SHUSHInfo from "./components/SHUSHInfo";
+import InfoComponent from "./components/SHUSHInfo";
 import { ColorPalettes } from "./interfaces/types";
 
 
@@ -110,7 +110,7 @@ function App() {
           <StyledH2>know your local noise polluting</StyledH2>
         </TitleBox>  
         <Calendar />
-        <SHUSHInfo/>
+        <InfoComponent/>
           
           <div style={{ width: '50%', padding: '25%', zIndex: 1, transform: 'translateY(-20%)'}}>
             
