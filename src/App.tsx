@@ -8,7 +8,7 @@ import ChartComponentDay from "./components/ChartComponentDay";
 import Calendar from "./components/Calender";
 import DBEffects from "./components/DBEffects";
 import backgroundImage from './images/gradation_background2.jpg';
-import InfoComponent from "./components/SHUSHInfo";
+import InfoComponent from "./components/InfoComponent";
 import { ColorPalettes } from "./interfaces/types";
 
 
