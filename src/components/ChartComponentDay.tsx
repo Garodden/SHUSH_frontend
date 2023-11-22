@@ -93,7 +93,8 @@ function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponen
 
 
     useEffect(() => {
-      if(CalenderClickedDate){
+      if(CalenderClickedDate && CalenderClickedDate[CalenderClickedDate.length-1] !=="0"){
+        /*
     fetchData(`http://43.201.157.179:8080/getAverageData/weekly/${CalenderClickedDate}/${curPosition}`).then((data:WeeklyData[]) => {
         const legend = data.map(item => `${item.id.startYear}-${item.id.startMonth}-${item.id.startDay} ~ ${item.id.endYear}-${item.id.endMonth}-${item.id.endDay}`);
         const avgData = data.map(item => item.average);
@@ -124,6 +125,7 @@ function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponen
 
         })
       });
+      */
       
 
       fetchData(`http://43.201.157.179:8080/getAverageData/daily/${CalenderClickedDate}/${curPosition}`).then((data:DailyData[]) => {
@@ -132,7 +134,7 @@ function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponen
         setDailyData({
           labels : timeData,
           datasets :[{
-            label:`${timeData[0]} ~ ${timeData[6]} 일별 평균 수치`,
+            label:data.length === 0 ? '선택된 날짜가 없습니다' : `${timeData[0]} ~ ${timeData[timeData.length - 1]} 일별 평균 수치`,
             data: avgData,
             fill: {
               target: 'origin',
@@ -170,7 +172,7 @@ function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponen
       setHourlyData({
         labels :timeData,
         datasets :[{
-          label:`${selectedDate}의 시간당 평균 수치`,
+          label: data.length === 0 ? '선택된 날짜가 없습니다' :`${selectedDate}의 시간당 평균 수치`,
           data: avgData,
           fill: {
             target: 'origin',

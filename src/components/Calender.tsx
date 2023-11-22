@@ -163,7 +163,7 @@ const Calendar: React.FC = () => {
         }
         setclickedDate(`${currentDate.getFullYear}-${currentDate.getMonth}-${currentDate.getDay}`)
         setDates(daysArray);
-        setCurPosition("A");
+        setCurPosition("B");
         checkAvailableDays(year, month, lastDay);
     };  
 
