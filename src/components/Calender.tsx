@@ -163,17 +163,17 @@ const Calendar: React.FC = () => {
         }
         setclickedDate(`${currentDate.getFullYear}-${currentDate.getMonth}-${currentDate.getDay}`)
         setDates(daysArray);
-        setCurPosition("B");
+        setCurPosition("A");
         checkAvailableDays(year, month, lastDay);
     };  
 
     const checkAvailableDays = (year:number , month:number, lastDay:number) =>{
-        fetchData(`http://43.201.157.179:8080/getAverageData/existing_days_in_month/${year}-${month}/${curPosition}`).then((data:DailyData[]) => {
+        fetchData(`http://43.201.157.179:8080/getAverageData/existing_days_in_month/${year}-${month+1}/${curPosition}`).then((data:DailyData[]) => {
             const daysAvailable  = data.map(item => item.id.day);
 
             if (daysAvailable.length > 0) {
                 setReCentDayInCurMonth(daysAvailable[daysAvailable.length - 1]);
-                setclickedDate(`${year}-${month}-${ReCentDayInCurMonth}`)
+                setclickedDate(`${year}-${month+1}-${ReCentDayInCurMonth}`)
             }
             else{
                 setReCentDayInCurMonth(0);
@@ -187,7 +187,7 @@ const Calendar: React.FC = () => {
   
     const dateClicked = (day: number) => {
         const year = currentDate.getFullYear();
-        const month = (currentDate.getMonth()).toString().padStart(2, '0');
+        const month = (currentDate.getMonth()+1).toString().padStart(2, '0');
         const formattedDay = day.toString().padStart(2, '0');
         setclickedDate(null);
         setclickedDate(`${year}-${month}-${formattedDay}`);
