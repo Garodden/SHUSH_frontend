@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, MouseEvent } from 'react';
 import axios from 'axios';
 import styled, {keyframes} from 'styled-components';
-import { HourlyData, DailyData, WeeklyData, ChartElementTypes, ColorPalettes} from '../interfaces/types';
+import { HourlyData, DailyData, WeeklyData, ChartElementTypes, ColorPalettes,ChartComponentDayProps} from '../interfaces/types';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -43,7 +43,7 @@ import {
 `;
 
 
-function ChartComponentDay(prop:{CalenderClickedDate:string}) {
+function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponentDayProps) {
     const [hourlyData, setHourlyData] = useState<ChartElementTypes|null>(null);
     const [dailyData, setDailyData] = useState<ChartElementTypes|null>(null);
     const [weeklyData, setWeeklyData] = useState<ChartElementTypes|null>(null);
@@ -93,8 +93,8 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
 
 
     useEffect(() => {
-      if(prop.CalenderClickedDate){
-    fetchData(`http://43.201.157.179:8080/getAverageData/weekly/${prop.CalenderClickedDate}/A`).then((data:WeeklyData[]) => {
+      if(CalenderClickedDate){
+    fetchData(`http://43.201.157.179:8080/getAverageData/weekly/${CalenderClickedDate}/${curPosition}`).then((data:WeeklyData[]) => {
         const legend = data.map(item => `${item.id.startYear}-${item.id.startMonth}-${item.id.startDay} ~ ${item.id.endYear}-${item.id.endMonth}-${item.id.endDay}`);
         const avgData = data.map(item => item.average);
         setWeeklyData({
@@ -124,8 +124,9 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
 
         })
       });
+      
 
-      fetchData(`http://43.201.157.179:8080/getAverageData/daily/${prop.CalenderClickedDate}/A`).then((data:DailyData[]) => {
+      fetchData(`http://43.201.157.179:8080/getAverageData/daily/${CalenderClickedDate}/${curPosition}`).then((data:DailyData[]) => {
         const timeData = data.map(item => `${item.id.year}-${item.id.month}-${item.id.day}`);
         const avgData = data.map(item => item.average);
         setDailyData({
@@ -149,15 +150,15 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
     });
   } 
 
-  setSelectedDate(prop.CalenderClickedDate);
+  setSelectedDate(CalenderClickedDate);
 
-},[prop.CalenderClickedDate]);
+},[CalenderClickedDate]);
 
 
 
   useEffect(() => {
     if(selectedDate){
-    fetchData(`http://43.201.157.179:8080/getAverageData/hourly/${selectedDate}/A`).then((data:HourlyData[]) => {
+    fetchData(`http://43.201.157.179:8080/getAverageData/hourly/${selectedDate}/${curPosition}`).then((data:HourlyData[]) => {
       const timeData = Array.from({ length: 24 }, (_, i) => i);
       const avgData = new Array(24).fill(0);
 

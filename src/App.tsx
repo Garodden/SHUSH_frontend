@@ -10,7 +10,6 @@ import ImgShushLogo from './images/img_shush_logo.png'
 const BackgroundStyle = styled.div`
   width: 100vw;
   height: 200vh;
-  background-image: ${backgroundImage};
   background-size: cover;
   background-position: center;
   position: absolute;
@@ -25,6 +24,8 @@ const BackgroundStyle = styled.div`
   & > *:not(:last-child) {
     margin-bottom: 20px;
   }
+
+  
 `;
 
 const BackgroundStyle2 = styled.div`
@@ -120,6 +121,7 @@ function App() {
   return (
     <>
       <BackgroundStyle>
+        <BackgroundStyle2>
         <TitleTwoRowGrid>
           <ImageContainer>
             <img src={ImgShushLogo}/>
@@ -132,6 +134,7 @@ function App() {
         </TitleTwoRowGrid>
         <Calendar />
         <InfoComponent/>
+        </BackgroundStyle2>
       </BackgroundStyle>
       
     </>

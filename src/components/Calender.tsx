@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import styled, {keyframes} from 'styled-components';
 import ChartComponentDay from './ChartComponentDay';
-import { HourlyData, DailyData, WeeklyData, ChartElementTypes, ColorPalettes} from '../interfaces/types';
+import { HourlyData, DailyData, WeeklyData, ChartElementTypes, ColorPalettes, ChartComponentDayProps} from '../interfaces/types';
 
 // styled-components 스타일 선언
 type CalendarContainerProps = {
@@ -133,7 +133,8 @@ const Calendar: React.FC = () => {
     const [dates, setDates] = useState<Array<number>>([]);
     const [clickedDate, setclickedDate] = useState<string|null>(null);
     const [AvailableDay , setAvailableDay] =  useState<Array<boolean>>([]);
-
+    const [ReCentDayInCurMonth , setReCentDayInCurMonth] =  useState<number|0>();
+    const [curPosition, setCurPosition] = useState<string|'A'>();
     useEffect(() => {
         renderCalendar();
     }, [currentDate]);
@@ -166,14 +167,23 @@ const Calendar: React.FC = () => {
     };  
 
     const checkAvailableDays = (year:number , month:number, lastDay:number) =>{
-        fetchData(`http://43.201.157.179:8080/existing_days_in_month/${year}-${month}/A`).then((data:DailyData[]) => {
+        fetchData(`http://43.201.157.179:8080/getAverageData/existing_days_in_month/${year}-${month+1}/A`).then((data:DailyData[]) => {
             const daysAvailable  = data.map(item => item.id.day);
+
+            if (daysAvailable.length > 0) {
+                setReCentDayInCurMonth(daysAvailable[daysAvailable.length - 1]);
+                setclickedDate(`${year}-${month}-${ReCentDayInCurMonth}`)
+            }
+            else{
+                setReCentDayInCurMonth(0);
+            }
+            
             setAvailableDay(
                 Array.from({ length: lastDay + 1 }, (_, index) => daysAvailable.includes(index))
             );
         });
     }
-
+  
     const dateClicked = (day: number) => {
         const year = currentDate.getFullYear();
         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
@@ -246,7 +256,7 @@ const Calendar: React.FC = () => {
             </div>
         </CalendarContainer>
 
-        {clickedDate && <ChartComponentDay CalenderClickedDate={clickedDate}/>}
+        {clickedDate && <ChartComponentDay CalenderClickedDate={clickedDate} curPosition={curPosition || "A"} />}
         
         </MainContainer>
     </>
