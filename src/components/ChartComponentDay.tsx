@@ -61,6 +61,8 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
       }
     };
 
+
+   
     
     const dateLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -92,7 +94,7 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
 
     useEffect(() => {
       if(prop.CalenderClickedDate){
-    fetchData(`http://3.35.225.160:4000/getAverageData/weekly/${prop.CalenderClickedDate}/B`).then((data:WeeklyData[]) => {
+    fetchData(`http://43.201.157.179:8080/getAverageData/weekly/${prop.CalenderClickedDate}/A`).then((data:WeeklyData[]) => {
         const legend = data.map(item => `${item.id.startYear}-${item.id.startMonth}-${item.id.startDay} ~ ${item.id.endYear}-${item.id.endMonth}-${item.id.endDay}`);
         const avgData = data.map(item => item.average);
         setWeeklyData({
@@ -123,7 +125,7 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
         })
       });
 
-      fetchData(`http://3.35.225.160:4000/getAverageData/daily/${prop.CalenderClickedDate}/B`).then((data:DailyData[]) => {
+      fetchData(`http://43.201.157.179:8080/getAverageData/daily/${prop.CalenderClickedDate}/A`).then((data:DailyData[]) => {
         const timeData = data.map(item => `${item.id.year}-${item.id.month}-${item.id.day}`);
         const avgData = data.map(item => item.average);
         setDailyData({
@@ -135,12 +137,12 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
               target: 'origin',
               below: 'rgb(0, 0, 255)'    // And blue below the origin
             },
-            backgroundColor: [ColorPalettes.chartFillColor1],
+            backgroundColor: [ColorPalettes.chartFillColor2],
               
             borderColor : [
-              ColorPalettes.chartBoarderColor1,],
+              ColorPalettes.chartBoarderColor2,],
               pointBackgroundColor :[
-                ColorPalettes.chartFillColor1,],
+                ColorPalettes.chartFillColor2,],
             tension: 0.2
             }]
       });
@@ -155,9 +157,14 @@ function ChartComponentDay(prop:{CalenderClickedDate:string}) {
 
   useEffect(() => {
     if(selectedDate){
-    fetchData(`http://3.35.225.160:4000/getAverageData/hourly/${selectedDate}/B`).then((data:HourlyData[]) => {
-      const timeData = data.map(item => item.id.hour);
-      const avgData = data.map(item => item.average);
+    fetchData(`http://43.201.157.179:8080/getAverageData/hourly/${selectedDate}/A`).then((data:HourlyData[]) => {
+      const timeData = Array.from({ length: 24 }, (_, i) => i);
+      const avgData = new Array(24).fill(0);
+
+      data.forEach(item => {
+        let hourIndex = item.id.hour;
+        avgData[hourIndex] = item.average; // 평균값 저장
+      });
 
       setHourlyData({
         labels :timeData,
@@ -192,8 +199,8 @@ const optionsDay = {
   aspectRatio: 2,
   scales: {
     y: {
-      min: 54,       // Y축의 최소값
-      max: 58,     // Y축의 최대값
+      min: 0,       // Y축의 최소값
+      max: 80,     // Y축의 최대값
       ticks: {
         stepSize: 0.2
       }
@@ -207,12 +214,14 @@ const optionsHour = {
   fill: true,
   scales: {
     y: {
-      min: 30,       // Y축의 최소값
+      min: 0,       // Y축의 최소값
       max: 80,     // Y축의 최대값
       ticks: {
         stepSize: 10
       }
-    },} 
+    
+    },
+    } 
   };
 
 

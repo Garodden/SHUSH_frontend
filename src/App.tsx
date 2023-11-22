@@ -1,26 +1,20 @@
-import React, {useState} from "react";
-import { useEffect } from 'react'
-import logo from './logo.svg';
+import {Link} from "react-router-dom";
 import './App.css';
 import styled from 'styled-components';
-import axios from "axios";
-import ChartComponentDay from "./components/ChartComponentDay";
 import Calendar from "./components/Calender";
-import DBEffects from "./components/DBEffects";
-import backgroundImage from './images/gradation_background2.jpg';
+import backgroundImage from './images/background_2.png';
 import InfoComponent from "./components/InfoComponent";
 import { ColorPalettes } from "./interfaces/types";
-
+import ImgShushLogo from './images/img_shush_logo.png'
 
 const BackgroundStyle = styled.div`
   width: 100vw;
-  height: 50vh;
-  background-color: ${ColorPalettes.backGroundColor};
+  height: 200vh;
+  background-image: ${backgroundImage};
   background-size: cover;
-  background-position: center center;
+  background-position: center;
   position: absolute;
   z-index: -3;
-
   // Flex 설정
   display: flex;
   flex-direction: column; // 세로로 아이템들을 배치
@@ -35,7 +29,7 @@ const BackgroundStyle = styled.div`
 
 const BackgroundStyle2 = styled.div`
   width: 100vw;
-  height: 300vh;
+  height: 100vh;
   background-color: ${ColorPalettes.backGroundColor2};
   background-size: cover;
   background-position: center center;
@@ -57,20 +51,45 @@ const BackgroundStyle2 = styled.div`
 
 const BackgroundBox = styled.div`
     flex:1;
-    width: 100vw;
-    height: 300vh;
-    background-color: ${ColorPalettes.backGroundColor2};
+    width: 100%;
+    height: 150vh;
+   
     position: absolute;
-    z-index: -4;  // 다른 요소들 뒤에 위치하도록
+    z-index: -2;  // 다른 요소들 뒤에 위치하도록
     display: flex;
-`;
+`
+
+const ImageContainer = styled.div`
+width: 120px; 
+height: 120px;
+border-radius: 50%;
+overflow: hidden;
+cursor: pointer; 
+background-color:white;
+align-self: center;
+z-axis = 3;
+margin:20px;
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+`
+const TitleTwoRowGrid= styled.div`
+width: 1270px; 
+display: grid; 
+grid-template-columns: min-content auto; 
+grid-template-rows: auto; 
+
+
+`
 
 const TitleBox = styled.div`
-    width:1230px;
-    
+    width:1fr;
     text-align: left;
     color: white;
 `;
+
 
 const StyledH1 = styled.h1`
   font-size: 5em;
@@ -100,27 +119,20 @@ function App() {
 
   return (
     <>
-    
-    <BackgroundBox>
-      
       <BackgroundStyle>
-        <TitleBox>
-          <StyledH1>SHUSH</StyledH1>
-          <StyledH3> SOCIAL PROBLEM-SOLVING PROJECT</StyledH3>
-          <StyledH2>know your local noise polluting</StyledH2>
-        </TitleBox>  
+        <TitleTwoRowGrid>
+          <ImageContainer>
+            <img src={ImgShushLogo}/>
+          </ImageContainer>
+          <TitleBox>
+            <StyledH1>SHUSH</StyledH1>
+            <StyledH3> SOCIAL PROBLEM-SOLVING PROJECT</StyledH3>
+            <StyledH2>know your local noise polluting</StyledH2>
+          </TitleBox>  
+        </TitleTwoRowGrid>
         <Calendar />
         <InfoComponent/>
-          
-          <div style={{ width: '50%', padding: '25%', zIndex: 1, transform: 'translateY(-20%)'}}>
-            
-          <div style={{ width: '110%'}}>
-          
-          </div>
-          </div>
-
       </BackgroundStyle>
-      </BackgroundBox>
       
     </>
   );

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import styled, {keyframes} from 'styled-components';
 import ChartComponentDay from './ChartComponentDay';
-import { ColorPalettes } from '../interfaces/types';
+import { HourlyData, DailyData, WeeklyData, ChartElementTypes, ColorPalettes} from '../interfaces/types';
 
 // styled-components 스타일 선언
 type CalendarContainerProps = {
@@ -111,13 +112,16 @@ const DateItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
+    font-weight: bold;
     &.today {
         background-color: ${ColorPalettes.calenderPointColor};
         color: #fff;
         border-radius: 50%;
         width: 14px;
         height: 14px;
+    }
+    &.half-transparent{
+        opacity: 0.5;
     }
 `;
 
@@ -128,11 +132,22 @@ const Calendar: React.FC = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dates, setDates] = useState<Array<number>>([]);
     const [clickedDate, setclickedDate] = useState<string|null>(null);
-   
-    
+    const [AvailableDay , setAvailableDay] =  useState<Array<boolean>>([]);
+
     useEffect(() => {
         renderCalendar();
     }, [currentDate]);
+
+    const fetchData = async (url:string) => {
+        try {
+          const response = await axios.get(url);
+          return response.data;
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          return [];
+        }
+      };
+ 
 
     const renderCalendar = () => {
         const year = currentDate.getFullYear();
@@ -147,7 +162,17 @@ const Calendar: React.FC = () => {
         }
         setclickedDate(`${currentDate.getFullYear}-${currentDate.getMonth}-${currentDate.getDay}`)
         setDates(daysArray);
-    };
+        checkAvailableDays(year, month, lastDay);
+    };  
+
+    const checkAvailableDays = (year:number , month:number, lastDay:number) =>{
+        fetchData(`http://43.201.157.179:8080/existing_days_in_month/${year}-${month}/A`).then((data:DailyData[]) => {
+            const daysAvailable  = data.map(item => item.id.day);
+            setAvailableDay(
+                Array.from({ length: lastDay + 1 }, (_, index) => daysAvailable.includes(index))
+            );
+        });
+    }
 
     const dateClicked = (day: number) => {
         const year = currentDate.getFullYear();
@@ -193,18 +218,28 @@ const Calendar: React.FC = () => {
                 </DaysContainer>
                 <DatesContainer>
                     {dates.map((date, idx) => {
-                        if (date) {
+                         const isAvailable = date ? AvailableDay[date] : false;
+                         const isToday = date === new Date().getDate() && currentDate.getMonth() === new Date().getMonth();
+                         if (date && isAvailable) {
                             return (
                                 <DateItem
                                     key={idx}
                                     onClick={() => dateClicked(date)}
-                                    className={date === new Date().getDate() && currentDate.getMonth() === new Date().getMonth() ? 'today' : ''}
+                                    className={isToday ? 'today' : ''}
                                 >
                                     {date}
                                 </DateItem>
                             );
                         } else {
-                            return <DateItem key={idx} />;
+                            // date가 없거나, 선택 불가능한 경우
+                            return (
+                                <DateItem
+                                    key={idx}
+                                    className={`${isToday ? 'today' : ''} ${!isAvailable ? 'half-transparent' : ''}`}
+                                >
+                                    {date}
+                                </DateItem>
+                            );
                         }
                     })}
                 </DatesContainer>
