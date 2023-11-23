@@ -4,7 +4,7 @@ import styled, {keyframes} from 'styled-components';
 import ChartComponentDay from './ChartComponentDay';
 import { HourlyData, DailyData, WeeklyData, ChartElementTypes, ColorPalettes, ChartComponentDayProps} from '../interfaces/types';
 
-// styled-components 스타일 선언
+//styled-components 스타일 선언
 type CalendarContainerProps = {
     clicked: boolean;
 };
@@ -43,7 +43,7 @@ const CalendarContainer = styled.div<CalendarContainerProps>`
     border-radius: 10px;
     padding: 30px;
     text-align: center;
-    align-self: flex-start;
+    align-self: center;
     color:${ColorPalettes.calenderTextColor}
 `;
 
@@ -82,10 +82,12 @@ const DaysContainer = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: ${ColorPalettes.calenderPointColor};
+    color: white;
     border-radius: 7px;
     font-weight: bold;
     padding: 0px;
     width: 100%;
+    align-self: flex-start;
     align-items: center;
     justify-items: flex-start;
 `;
@@ -126,18 +128,67 @@ const DateItem = styled.div`
 `;
 
 
-  
+const LeftSideofMainContainer = styled.div`
+display: flex;
+flex-direction: column; // 컨테이너의 요소들을 세로로 배치
+justify-content: center; // 세로 방향 중앙 정렬
+align-items: center; // 가로 방향 중앙 정렬
+height: 100%;
+
+`
+const PositionButtonsContainer = styled.div`
+display:grid;
+grid-template-columns: auto auto auto; // 두 열
+grid-template-rows: auto;  // 한 행 
+border-radius: 20px;
+padding: 10px;
+margin: 5px 0px;
+border: 3px solid white;
+align-self:flex-start;
+justify-content: center; // 가로 중앙 정렬
+align-items: center; // 세로 중앙 정렬
+   
+`;
+
+const PositionButton = styled.button`
+border: 5px solid white; // 하얀색 보더
+border-radius: 50%; // 원형 모양
+background-color: transparent; // 배경색 투명
+color: white; // 글자색 하얀색
+padding: 10px 15px; // 적절한 패딩
+font-size: 16px; // 글자 크기
+cursor: pointer; // 마우스 오버시 커서 변경
+margin: 0px 5px;
+font-weight: bold;
+position:relative;
+opacity:50%;
+&:hover {
+    opacity:100%;
+};
+&:hover::after {
+    content: attr(data-hover-text); // data-hover-text 속성값을 텍스트로 설정
+    position: absolute;
+    top: -40px; // 버튼 아래에 위치
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    // 추가적인 스타일링...
+  };
+`;
+
 
 const Calendar: React.FC = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dates, setDates] = useState<Array<number>>([]);
-    const [clickedDate, setclickedDate] = useState<string|null>(null);
+    const [clickedDate, setclickedDate] = useState<string|null>(`${new Date().getFullYear}-${new Date().getMonth}-${new Date().getDay}`);
     const [AvailableDay , setAvailableDay] =  useState<Array<boolean>>([]);
     const [ReCentDayInCurMonth , setReCentDayInCurMonth] =  useState<number|0>();
-    const [curPosition, setCurPosition] = useState<string|'A'>();
+    const [curPosition="A", setCurPosition] = useState<string|'A'>();
     useEffect(() => {
+        
         renderCalendar();
-    }, [currentDate]);
+        
+    }, [currentDate, curPosition]);
 
     const fetchData = async (url:string) => {
         try {
@@ -163,7 +214,8 @@ const Calendar: React.FC = () => {
         }
         setclickedDate(`${currentDate.getFullYear}-${currentDate.getMonth}-${currentDate.getDay}`)
         setDates(daysArray);
-        setCurPosition("B");
+        
+        
         checkAvailableDays(year, month, lastDay);
     };  
 
@@ -208,8 +260,14 @@ const Calendar: React.FC = () => {
     return (
         <>
         <MainContainer>
-
-        <CalendarContainer clicked={!!clickedDate}>
+        <LeftSideofMainContainer>
+            <PositionButtonsContainer>
+                <PositionButton  data-hover-text="한마음 앞 소음측정기" onClick={() => setCurPosition("A")}>A</PositionButton>
+                <PositionButton  data-hover-text="욱일 뒤 소음측정기" onClick={() => setCurPosition("B")}>B</PositionButton>
+                <PositionButton  data-hover-text="농심 뒤 소음측정기" onClick={() => setCurPosition("c")}>C</PositionButton>
+            </PositionButtonsContainer>
+            <CalendarContainer clicked={!!clickedDate}>
+            
             <Header>
                 <YearMonth>
                 <NavigationButton onClick={prevMonth}>&lt;</NavigationButton>
@@ -217,7 +275,6 @@ const Calendar: React.FC = () => {
                 <NavigationButton onClick={nextMonth}>&gt;</NavigationButton>
                 </YearMonth>
             </Header>
-            <div>
                 <DaysContainer>
                     <Day>일</Day>
                     <Day>월</Day>
@@ -254,11 +311,9 @@ const Calendar: React.FC = () => {
                         }
                     })}
                 </DatesContainer>
-            </div>
-        </CalendarContainer>
-
+            </CalendarContainer>
+        </LeftSideofMainContainer>
         {clickedDate && <ChartComponentDay CalenderClickedDate={clickedDate} curPosition={curPosition || "B"} />}
-        
         </MainContainer>
     </>
 

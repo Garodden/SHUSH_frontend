@@ -12,6 +12,7 @@ const BackgroundStyle = styled.div`
   height: 200vh;
   background-size: cover;
   background-position: center;
+  background-image: linear-gradient(to top, ${ColorPalettes.backGroundColor2},${ColorPalettes.chartFillColor2}); // 그라데이션 적용
   position: absolute;
   z-index: -3;
   // Flex 설정
@@ -121,7 +122,7 @@ function App() {
   return (
     <>
       <BackgroundStyle>
-        <BackgroundStyle2>
+        
         <TitleTwoRowGrid>
           <ImageContainer>
             <img src={ImgShushLogo}/>
@@ -134,9 +135,8 @@ function App() {
         </TitleTwoRowGrid>
         <Calendar />
         <InfoComponent/>
-        </BackgroundStyle2>
+        
       </BackgroundStyle>
-      
     </>
   );
 

@@ -93,7 +93,7 @@ function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponen
 
 
     useEffect(() => {
-      if(CalenderClickedDate && CalenderClickedDate[CalenderClickedDate.length-1] !=="0"){
+      if(CalenderClickedDate && CalenderClickedDate[CalenderClickedDate.length] !== "0"){
         /*
     fetchData(`http://43.201.157.179:8080/getAverageData/weekly/${CalenderClickedDate}/${curPosition}`).then((data:WeeklyData[]) => {
         const legend = data.map(item => `${item.id.startYear}-${item.id.startMonth}-${item.id.startDay} ~ ${item.id.endYear}-${item.id.endMonth}-${item.id.endDay}`);

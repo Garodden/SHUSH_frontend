@@ -25,10 +25,14 @@ const TextBoxWhat = styled.div`
 
 const ServiceContainer = styled.div`
 display: grid; 
-grid-template-columns: 1fr 1fr; 
+grid-template-columns: 1fr; 
 grid-template-rows: auto; 
 `
 
+const ImgCont = styled.img`
+max-width: 600px;
+height:auto;
+ `
 
 
 const InfoTextComponent = ({ clickedValue }: { clickedValue: number | null }) =>{
@@ -49,7 +53,6 @@ const InfoTextComponent = ({ clickedValue }: { clickedValue: number | null }) =>
           <ServiceContainer>
             {TextGroups.serviceProvided}
           </ServiceContainer>
-          
         </TextBoxWhat>
       )}
 
@@ -65,7 +68,7 @@ const InfoTextComponent = ({ clickedValue }: { clickedValue: number | null }) =>
         <TextBoxWhat> 
           <h2>소음측정기 설치 위치</h2>
           {TextGroups.machinePosition}
-          <img src={PositionImg} alt="소음측정기 설치 위치" />
+          <ImgCont src={PositionImg} alt="소음측정기 설치 위치" />
         </TextBoxWhat>
       )}
   </>

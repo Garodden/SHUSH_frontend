@@ -49,7 +49,7 @@ export type ChartElementTypes= {
 //     TitleTextColor:`white`,
 // }
 export const ColorPalettes={
-    backGroundColor:`rgb(1, 18, 26)`,
+    backGroundColor:`black`,
     backGroundColor2:`rgb(240, 248, 255)`,
     mainContainerColor:`rgb(207, 226, 243)`,
     calenderContainerColor: `rgb(233, 239, 247)`,
