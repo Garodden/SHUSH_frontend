@@ -8,35 +8,55 @@ import ImgServiceLogo from '../images/img_service_logo.png';
 import InfoTextComponent from './InfoTextComponent';
 
 const InfoContainer = styled.div`
-width: 1270px;
+width: 100%;  
+max-width: 1270px; 
+min-width:400px; 
+
 display: grid;
 grid-template-columns: auto auto;
 grid-template-rows: auto;
 background-color:${ColorPalettes.mainContainerColor};
 border-radius: 10px;
 gap: 10px;
+
+@media screen and (max-width: 768px) {
+  grid-template-columns: auto; 
+  gap: 20px;
+}
+
 `
 const ImgButtonsContainer = styled.div`
-display: grid; 
-grid-template-columns: auto; 
-grid-template-rows: 1fr 1fr 1fr 1fr; 
-gap: 100px; 
+ display: grid; 
+ grid-template-columns: auto; // 4개의 열로 변경
+ grid-template-rows: repeat(4, 1fr);   
+gap: 20px; 
 margin: 30px;
 
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: auto;             
+    gap: 20px;                            
+  }
 `
 
 const ImageButton = styled.div`
-width: 120px;   /* 원하는 너비 설정 */
-height: 120px;  /* 너비와 같게 설정하여 원형을 유지 */
-border-radius: 50%;     /* 원형 모양 생성 */
-overflow: hidden;       /* 이미지가 컨테이너 밖으로 나가지 않도록 함 */
-cursor: pointer;        /* 마우스 오버 시 커서 변경 */
-background-color:white;
-z-axis = 3;
+width: 100px;  // 너비 조정
+height: 100px; // 높이 조정
+border-radius: 50%;
+overflow: hidden;
+cursor: pointer;
+background-color: white;
+align-self: center;
+
 img {
   width: 100%;
   height: 100%;
-  object-fit: cover;    /* 이미지 비율 유지하면서 컨테이너에 맞춤 */
+  object-fit: cover;
+}
+
+@media screen and (max-width: 768px) {
+  width: 60px;  
+  height: 60px; 
 }
 `
 const TextBoxWhat = styled.div`
@@ -52,12 +72,21 @@ const TextBoxWhat = styled.div`
   align-self: flex-start;
   color:${ColorPalettes.textColor};
   margin:20px;
+
+  @media screen and (max-width: 768px) {
+    margin:0px;
+  }
   
 `;
 
 const ReactivetextBox = styled.div`
-margin: 30px;
-`
+  margin: 30px;
+  width: 100%; 
+
+  @media screen and (max-width: 768px) {
+    margin:0px;
+  }
+`;
 
 document.addEventListener('DOMContentLoaded', () => {
     const imageContainer = document.querySelector('.image-container') as HTMLElement;

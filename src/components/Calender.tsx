@@ -11,13 +11,23 @@ type CalendarContainerProps = {
 
 
 const MainContainer = styled.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border-radius: 15px;
+  padding: 20px;
+  background-color: ${ColorPalettes.mainContainerColor};
+  width: 100%;  
+  max-width: 1230px; 
+  height:auto;
+  min-width: 300px; 
+  max-height: 2000px;
+  @media screen and (max-width: 768px) {
+    flex-direction: column; 
+    align-items: flex-start; 
     justify-content: center;
-    gap: 20px;
-    border-radius: 15px;
-    padding:20px;
-    background-color:${ColorPalettes.mainContainerColor};
+  }
 `;
 
 
@@ -25,16 +35,18 @@ const ChartContainer = styled.div`
 
     flex: 1;    
     width: 100%;
-    padding: 0%;  // 30%에서 10%로 변경
-      // 상하 간격은 0, 좌우 간격은 10px
+    padding: 0%;  
       
 `;
 
 
 const CalendarContainer = styled.div<CalendarContainerProps>`
-    flex: 1; // flex container의 사용 가능한 공간을 최대한 활용하도록 변경
-    width: 450px;
-    height: 500px;
+    flex: 1; 
+    width: 100%;
+    max-width: 450px;
+    min-width: 300px:
+    height: auto; 
+    max-height: 500px; 
     background-color: ${ColorPalettes.calenderContainerColor};
     display: flex;
     flex-direction: column;
@@ -45,7 +57,12 @@ const CalendarContainer = styled.div<CalendarContainerProps>`
     text-align: center;
     align-self: center;
     color:${ColorPalettes.calenderTextColor}
-`;
+
+    @media screen and (max-width: 768px) {
+        max-width: 90%;
+        max-height: none; 
+      }
+    `;
 
 
 const Header = styled.div`
@@ -53,18 +70,25 @@ const Header = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem; // rem 단위로 변경
+    margin-bottom: 1rem; 
+    @media screen and (max-width: 768px) {
+        margin-bottom: 0.5rem;
+      }
 `;
 
 
 const YearMonth = styled.div`
     flex: 1;
-    display: flex; // flexbox 사용
-    justify-content: center; // 수평 중앙 정렬
-    align-items: center; // 수직 중앙 정렬
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
     gap: 90px;
     text-align: center;
-    font-size: 1.5rem; // rem 단위로 변경
+    font-size: 1.5rem; 
+    @media screen and (max-width: 768px) {
+        gap: 40px;
+        font-size: 1rem;
+      }
 `;
 
 const NavigationButton = styled.button`
@@ -75,6 +99,10 @@ const NavigationButton = styled.button`
     padding: 20px 25px;
     border-radius: 10px;
     cursor: pointer;
+    @media screen and (max-width: 768px) {
+        padding: 10px 15px;
+        font-size: 16px;
+      }
     
 `;
 
@@ -90,6 +118,9 @@ const DaysContainer = styled.div`
     align-self: flex-start;
     align-items: center;
     justify-items: flex-start;
+    @media screen and (max-width: 768px) {
+        font-size: 0.8rem;
+      }
 `;
 
 const Day = styled.div`
@@ -104,6 +135,9 @@ const DatesContainer = styled.div`
     width: 100%;
     justify-items: center;
     align-items: center;
+    @media screen and (max-width: 768px) {
+        gap: 5px;
+      }
 `;
 
 const DateItem = styled.div`
@@ -125,39 +159,48 @@ const DateItem = styled.div`
     &.half-transparent{
         opacity: 0.5;
     }
+
+    @media screen and (max-width: 768px) {
+        padding: 10px;
+        width: calc(100% / 7 - 5px);
+        &.today {
+          width: 10px;
+          height: 10px;
+        }
+      }
 `;
 
 
 const LeftSideofMainContainer = styled.div`
 display: flex;
-flex-direction: column; // 컨테이너의 요소들을 세로로 배치
-justify-content: center; // 세로 방향 중앙 정렬
-align-items: center; // 가로 방향 중앙 정렬
+flex-direction: column; 
+justify-content: center; 
+align-items: center; 
 height: 100%;
 
 `
 const PositionButtonsContainer = styled.div`
 display:grid;
-grid-template-columns: auto auto auto; // 두 열
-grid-template-rows: auto;  // 한 행 
+grid-template-columns: auto auto auto; 
+grid-template-rows: auto;  
 border-radius: 20px;
 padding: 10px;
 margin: 5px 0px;
 border: 3px solid white;
 align-self:flex-start;
-justify-content: center; // 가로 중앙 정렬
-align-items: center; // 세로 중앙 정렬
+justify-content: center; 
+align-items: center; 
    
 `;
 
 const PositionButton = styled.button`
-border: 5px solid white; // 하얀색 보더
-border-radius: 50%; // 원형 모양
-background-color: transparent; // 배경색 투명
-color: white; // 글자색 하얀색
-padding: 10px 15px; // 적절한 패딩
-font-size: 16px; // 글자 크기
-cursor: pointer; // 마우스 오버시 커서 변경
+border: 5px solid white; 
+border-radius: 50%; 
+background-color: transparent; 
+color: white;
+padding: 10px 15px;
+font-size: 16px; 
+cursor: pointer; 
 margin: 0px 5px;
 font-weight: bold;
 position:relative;
@@ -166,13 +209,13 @@ opacity:50%;
     opacity:100%;
 };
 &:hover::after {
-    content: attr(data-hover-text); // data-hover-text 속성값을 텍스트로 설정
+    content: attr(data-hover-text); 
     position: absolute;
-    top: -40px; // 버튼 아래에 위치
+    top: -40px; 
     left: 50%;
     transform: translateX(-50%);
     white-space: nowrap;
-    // 추가적인 스타일링...
+
   };
 `;
 

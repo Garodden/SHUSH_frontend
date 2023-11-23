@@ -6,8 +6,10 @@ import PositionImg from '../images/DbCountPosition.png';
 import  * as TextGroups from '../textFiles/InfoTextGroups';
 
 const TextBoxWhat = styled.div`
-  width:1000px; 
+  width: 100%; 
+  max-width: 1000px; 
   padding: 20px;
+  
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
   background-color:${ColorPalettes.textBoxColor};
@@ -21,17 +23,26 @@ const TextBoxWhat = styled.div`
   word-break: break-word;
   font-weight: 900;
   
+  @media screen and (max-width: 768px) {
+    font-size: 18px; 
+    padding: 10px; 
+  }
 `;
 
 const ServiceContainer = styled.div`
-display: grid; 
-grid-template-columns: 1fr; 
-grid-template-rows: auto; 
-`
+  display: grid; 
+  grid-template-columns: 1fr; 
+  grid-template-rows: auto; 
+  width: 100%; 
+`;
 
 const ImgCont = styled.img`
-max-width: 600px;
-height:auto;
+max-width: 600px; 
+  height: auto; 
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%; 
+  }
  `
 
 

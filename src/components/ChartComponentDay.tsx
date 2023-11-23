@@ -31,15 +31,34 @@ import {
   flex: 1;
   display: flex;
   flex-direction: column;
+  width: 70%;
+  heghit:auto;
+  max-width:700px;
+  min-width:400px;
+  max-height:700px;
   gap: 20px;
+  
+  @media screen and (max-width: 768px) {
+    width: 100%; 
+  }
   `
   const ChartStyle = styled.div`
-  background-color:${ColorPalettes.chartBaseColor};
+  background-color: ${ColorPalettes.chartBaseColor};
   border: none;
-  width: 700px;
-  height: 350px;
+  width: 100%;
+  max-width: 700px;
+  min-width: 300px; 
+  height: auto;
+  max-height: 350px;
+  aspect-ratio: 2 / 1;
   border-radius: 10px;
   cursor: pointer;
+
+  @media screen and (max-width: 768px) {
+    aspect-ratio: 1 / 1; 
+    min-width: 200px; 
+    max-height: none; 
+  }
 `;
 
 
@@ -94,40 +113,7 @@ function ChartComponentDay({ CalenderClickedDate, curPosition="" }:ChartComponen
 
     useEffect(() => {
       if(CalenderClickedDate && CalenderClickedDate[CalenderClickedDate.length] !== "0"){
-        /*
-    fetchData(`http://43.201.157.179:8080/getAverageData/weekly/${CalenderClickedDate}/${curPosition}`).then((data:WeeklyData[]) => {
-        const legend = data.map(item => `${item.id.startYear}-${item.id.startMonth}-${item.id.startDay} ~ ${item.id.endYear}-${item.id.endMonth}-${item.id.endDay}`);
-        const avgData = data.map(item => item.average);
-        setWeeklyData({
-          labels :legend,
-          datasets :[{
-            label:'Weekly Average',
-            data: avgData,
-            fill: {
-              target: 'origin',
-              below: 'rgb(0, 0, 255)'    // And blue below the origin
-            },  // fill 속성을 true로 설정
-            backgroundColor: [
-              ColorPalettes.chartFillColor1,
-              ColorPalettes.chartFillColor2,
-              ColorPalettes.chartFillColor3,],
-            borderColor : [
-              ColorPalettes.chartBoarderColor1,
-              ColorPalettes.chartBoarderColor2,
-              ColorPalettes.chartBoarderColor3,],
-              pointBackgroundColor :[
-                ColorPalettes.chartFillColor1,
-                ColorPalettes.chartFillColor2,
-                ColorPalettes.chartFillColor3,],
-            tension: 0.2
-            }]
-          
-
-        })
-      });
-      */
       
-
       fetchData(`http://43.201.157.179:8080/getAverageData/daily/${CalenderClickedDate}/${curPosition}`).then((data:DailyData[]) => {
         const timeData = data.map(item => `${item.id.year}-${item.id.month}-${item.id.day}`);
         const avgData = data.map(item => item.average);

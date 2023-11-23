@@ -8,20 +8,19 @@ import { ColorPalettes } from "./interfaces/types";
 import ImgShushLogo from './images/img_shush_logo.png'
 
 const BackgroundStyle = styled.div`
-  width: 100vw;
-  height: 200vh;
+  width: 100%;
+  height: 250%;
   background-size: cover;
   background-position: center;
-  background-image: linear-gradient(to top, ${ColorPalettes.backGroundColor2},${ColorPalettes.chartFillColor2}); // 그라데이션 적용
+  background-image: linear-gradient(to top, ${ColorPalettes.backGroundColor2},${ColorPalettes.chartFillColor2}); 
   position: absolute;
   z-index: -3;
   // Flex 설정
   display: flex;
-  flex-direction: column; // 세로로 아이템들을 배치
-  align-items: center;    // 가로 중앙 정렬
-  justify-content: flex-start; // 세로 시작 위치에서 아이템 배치 시작
+  flex-direction: column; 
+  align-items: center;    
+  justify-content: flex-start; 
 
-  // 각 아이템들 사이의 간격을 설정
   & > *:not(:last-child) {
     margin-bottom: 20px;
   }
@@ -78,18 +77,28 @@ img {
 }
 `
 const TitleTwoRowGrid= styled.div`
-width: 1270px; 
-display: grid; 
-grid-template-columns: min-content auto; 
-grid-template-rows: auto; 
+width: 100%; // 상대적 너비 설정
+  max-width: 1270px; // 최대 너비 제한
+  display: grid; 
+  grid-template-columns: min-content auto; 
+  grid-template-rows: auto; 
+  margin: 0 auto; // 중앙 정렬
 
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr; 
+    text-align: center; // 텍스트 중앙 정렬
+  }
+`;
 
-`
 
 const TitleBox = styled.div`
-    width:1fr;
-    text-align: left;
-    color: white;
+  width: 1fr;
+  text-align: left;
+  color: white;
+
+  @media screen and (max-width: 768px) {
+    text-align: center; 
+  }
 `;
 
 
